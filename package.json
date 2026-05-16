@@ -19,6 +19,11 @@
     "url": "https://github.com/tiendat3m/TodoList/issues"
   },
   "homepage": "https://github.com/tiendat3m/TodoList#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "mongoose": "^8.0.0"
+  },
   "devDependencies": {
     "vercel": "^54.1.0"
   }
