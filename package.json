@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/tiendat3m/TodoList/issues"
   },
-  "homepage": "https://github.com/tiendat3m/TodoList#readme"
+  "homepage": "https://github.com/tiendat3m/TodoList#readme",
+  "devDependencies": {
+    "vercel": "^54.1.0"
+  }
 }

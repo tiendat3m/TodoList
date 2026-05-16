@@ -1,11 +1,21 @@
 import mongoose from 'mongoose'
 
-export const connecDb = async (params) => {
+// Cache connection for serverless
+let cachedDb = null;
+
+export const connecDb = async () => {
+    // If already connected, return cached connection
+    if (cachedDb && mongoose.connection.readyState === 1) {
+        return cachedDb;
+    }
+
     try {
-        await mongoose.connect(process.env.DB_CONNECT_STRING)
-        console.log('liên kết DB thành công')
+        const conn = await mongoose.connect(process.env.DB_CONNECT_STRING);
+        cachedDb = conn;
+        console.log('liên kết DB thành công');
+        return conn;
     } catch (error) {
-        console.error('Lỗi khi liên kết DB:', error)
-        process.exit(1)
+        console.error('Lỗi khi liên kết DB:', error);
+        throw error; // Don't exit in serverless
     }
 }

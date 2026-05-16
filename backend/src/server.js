@@ -17,7 +17,19 @@ if (process.env.NODE_ENV !== "production") {
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true
     }))
+} else {
+    app.use(cors({
+        origin: true,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true
+    }))
 }
+
+// Connect to MongoDB before handling requests
+app.use(async (req, res, next) => {
+    await connecDb();
+    next();
+});
 
 app.use('/api/tasks', taskRoute)
 
@@ -28,11 +40,17 @@ if (process.env.NODE_ENV === "production") {
     })
 }
 
-connecDb().then(() => {
-    app.listen(port, () => {
-        console.log("App is running on port: 5001")
+// For local development
+if (process.env.NODE_ENV !== "production") {
+    connecDb().then(() => {
+        app.listen(port, () => {
+            console.log("App is running on port: " + port)
+        })
     })
-})
+}
+
+// For Vercel serverless
+export default app
 
 
 
